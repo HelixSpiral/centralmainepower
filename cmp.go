@@ -2,7 +2,7 @@ package cmpscraper
 
 import "net/http"
 
-func New(newCMP *CMP) (CMP, error) {
+func New(config *Config) (Client, error) {
 	client := &http.Client{}
 	reqHeaders := map[string]string{
 		"User-Agent":      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.9999.99 Safari/537.36",
@@ -14,25 +14,25 @@ func New(newCMP *CMP) (CMP, error) {
 	mwStatsUrl := "https://ecmp.cmpco.com/omni/content/cmpload.txt"
 	powerStatsUrl := "https://ecmp.cmpco.com/OutageReports/CMP.html"
 
-	if newCMP.Client != nil {
-		client = newCMP.Client
+	if config.Client != nil {
+		client = config.Client
 	}
 
-	if newCMP.ReqHeaders != nil {
-		for k, v := range newCMP.ReqHeaders {
+	if config.ReqHeaders != nil {
+		for k, v := range config.ReqHeaders {
 			reqHeaders[k] = v
 		}
 	}
 
-	if newCMP.MWStatsUrl != "" {
-		mwStatsUrl = newCMP.MWStatsUrl
+	if config.MWStatsUrl != "" {
+		mwStatsUrl = config.MWStatsUrl
 	}
 
-	if newCMP.PowerStatsUrl != "" {
-		powerStatsUrl = newCMP.PowerStatsUrl
+	if config.PowerStatsUrl != "" {
+		powerStatsUrl = config.PowerStatsUrl
 	}
 
-	return CMP{
+	return Client{
 		Client:     client,
 		ReqHeaders: reqHeaders,
 

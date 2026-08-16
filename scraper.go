@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func (cmp *CMP) rawReq(url string) ([]byte, error) {
+func (cmp *Client) rawReq(url string) ([]byte, error) {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return []byte{}, fmt.Errorf("erorr creating request: %w", err)
@@ -34,7 +34,7 @@ func (cmp *CMP) rawReq(url string) ([]byte, error) {
 	return body, nil
 }
 
-func (cmp *CMP) GetCurrentLoad() (string, error) {
+func (cmp *Client) GetCurrentLoad() (string, error) {
 	body, err := cmp.rawReq(cmp.MWStatsUrl)
 	if err != nil {
 		return "", err
@@ -43,7 +43,7 @@ func (cmp *CMP) GetCurrentLoad() (string, error) {
 	return string(body), nil
 }
 
-func (cmp *CMP) GetOutageStats() (CMPPowerStats, error) {
+func (cmp *Client) GetOutageStats() (CMPPowerStats, error) {
 	var stats CMPPowerStats
 	stats.Counties = make(map[string]Outage)
 
