@@ -1,11 +1,19 @@
-package cmpscraper
+package centralmainepower
 
 import (
 	"net/http"
 	"time"
 )
 
-type CMP struct {
+type Client struct {
+	Client     *http.Client
+	ReqHeaders map[string]string
+
+	MWStatsUrl    string
+	PowerStatsUrl string
+}
+
+type Config struct {
 	Client     *http.Client
 	ReqHeaders map[string]string
 
