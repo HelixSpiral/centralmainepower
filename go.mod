@@ -1,4 +1,4 @@
-module github.com/HelixSpiral/cmpscraper/v2
+module github.com/HelixSpiral/centralmainepower/v3
 
 go 1.19
 

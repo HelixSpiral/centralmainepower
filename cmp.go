@@ -1,4 +1,4 @@
-package cmpscraper
+package centralmainepower
 
 import "net/http"
 
