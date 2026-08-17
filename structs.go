@@ -3,6 +3,8 @@ package centralmainepower
 import (
 	"net/http"
 	"time"
+
+	"github.com/HelixSpiral/centralmainepower/v3/load"
 )
 
 type Client struct {
@@ -11,6 +13,7 @@ type Client struct {
 
 	MWStatsUrl    string
 	PowerStatsUrl string
+	Load          load.Service
 }
 
 type Config struct {

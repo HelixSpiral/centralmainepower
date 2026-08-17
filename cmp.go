@@ -1,6 +1,10 @@
 package centralmainepower
 
-import "net/http"
+import (
+	"net/http"
+
+	"github.com/HelixSpiral/centralmainepower/v3/load"
+)
 
 func New(config *Config) (Client, error) {
 	client := &http.Client{}
@@ -11,7 +15,6 @@ func New(config *Config) (Client, error) {
 		"Connection":      "keep-alive",
 	}
 
-	mwStatsUrl := "https://ecmp.cmpco.com/omni/content/cmpload.txt"
 	powerStatsUrl := "https://ecmp.cmpco.com/OutageReports/CMP.html"
 
 	if config.Client != nil {
@@ -24,19 +27,18 @@ func New(config *Config) (Client, error) {
 		}
 	}
 
-	if config.MWStatsUrl != "" {
-		mwStatsUrl = config.MWStatsUrl
-	}
-
 	if config.PowerStatsUrl != "" {
 		powerStatsUrl = config.PowerStatsUrl
 	}
+
+	loadService := load.New(client, reqHeaders)
 
 	return Client{
 		Client:     client,
 		ReqHeaders: reqHeaders,
 
-		MWStatsUrl:    mwStatsUrl,
 		PowerStatsUrl: powerStatsUrl,
+
+		Load: loadService,
 	}, nil
 }
