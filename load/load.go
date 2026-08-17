@@ -3,7 +3,6 @@ package load
 import (
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -64,20 +63,18 @@ func (s *Service) Latest() (Reading, error) {
 	loadInfo := regTimestamp.FindStringSubmatch(string(body))
 
 	if len(loadInfo) < 3 {
-		log.Fatalf("matches off: %+v", loadInfo)
+		return reading, fmt.Errorf("error parsing load file: %+v", loadInfo)
 	}
 
 	reading.Timestamp, err = time.Parse("Mon Jan 2 15:04:05 MST 2006", loadInfo[1])
 	if err != nil {
-		log.Fatal(err)
+		return reading, fmt.Errorf("error parsing load file timestamp: %w", err)
 	}
 
 	reading.Load, err = strconv.ParseFloat(loadInfo[2], 64)
 	if err != nil {
-		log.Fatal(err)
+		return reading, fmt.Errorf("error parsing load file load: %w", err)
 	}
-
-	fmt.Println(string(body))
 
 	return reading, nil
 }
