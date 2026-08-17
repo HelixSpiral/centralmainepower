@@ -12,17 +12,6 @@ import (
 // cmpMWLoadURL is the URL for the text file Central Maine Power manages
 const cmpMWLoadURL = "https://ecmp.cmpco.com/omni/content/cmpload.txt"
 
-type Service struct {
-	Client     *http.Client
-	ReqHeaders map[string]string
-	url        string
-}
-
-type Reading struct {
-	Timestamp time.Time
-	Load      float64
-}
-
 // New takes a client and any request headers, and returns a service
 func New(client *http.Client, reqHeaders map[string]string) Service {
 	return Service{
