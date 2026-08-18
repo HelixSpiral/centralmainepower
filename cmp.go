@@ -4,12 +4,11 @@ import (
 	"net/http"
 
 	"github.com/HelixSpiral/centralmainepower/v3/internal/load"
+	"github.com/HelixSpiral/centralmainepower/v3/internal/outage"
 )
 
 func New(config *Config) (Client, error) {
 	client := &http.Client{}
-
-	powerStatsUrl := "https://ecmp.cmpco.com/OutageReports/CMP.html"
 
 	if config.Client != nil {
 		client = config.Client
@@ -22,18 +21,14 @@ func New(config *Config) (Client, error) {
 		}
 	}
 
-	if config.PowerStatsUrl != "" {
-		powerStatsUrl = config.PowerStatsUrl
-	}
-
 	loadService := load.New(client, reqHeaders)
+	outageService := outage.New(client, reqHeaders)
 
 	return Client{
 		Client:     client,
 		ReqHeaders: reqHeaders,
 
-		PowerStatsUrl: powerStatsUrl,
-
-		Load: loadService,
+		Outage: outageService,
+		Load:   loadService,
 	}, nil
 }

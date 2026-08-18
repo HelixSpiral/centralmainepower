@@ -2,9 +2,9 @@ package centralmainepower
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/HelixSpiral/centralmainepower/v3/internal/load"
+	"github.com/HelixSpiral/centralmainepower/v3/internal/outage"
 )
 
 type Client struct {
@@ -14,6 +14,7 @@ type Client struct {
 	MWStatsUrl    string
 	PowerStatsUrl string
 	Load          load.Service
+	Outage        outage.Service
 }
 
 type Config struct {
@@ -22,17 +23,4 @@ type Config struct {
 
 	MWStatsUrl    string
 	PowerStatsUrl string
-}
-
-type CMPPowerStats struct {
-	LastUpdate   time.Time
-	Total        string
-	WithoutPower string
-	Counties     map[string]Outage
-	NoOutages    bool
-}
-
-type Outage struct {
-	Total        string
-	WithoutPower string
 }
