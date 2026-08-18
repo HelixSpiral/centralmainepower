@@ -21,14 +21,14 @@ func New(config *Config) (Client, error) {
 		}
 	}
 
-	loadService := load.New(client, reqHeaders)
-	outageService := outage.New(client, reqHeaders)
+	loadClient := load.New(client, reqHeaders)
+	outageClient := outage.New(client, reqHeaders)
 
 	return Client{
 		Client:     client,
 		ReqHeaders: reqHeaders,
 
-		Outage: outageService,
-		Load:   loadService,
+		Outage: outageClient,
+		Load:   loadClient,
 	}, nil
 }

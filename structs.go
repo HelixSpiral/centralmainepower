@@ -13,8 +13,9 @@ type Client struct {
 
 	MWStatsUrl    string
 	PowerStatsUrl string
-	Load          load.Service
-	Outage        outage.Service
+
+	Load   load.Client
+	Outage outage.Client
 }
 
 type Config struct {

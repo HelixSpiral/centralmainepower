@@ -12,9 +12,9 @@ import (
 // cmpOutageURL is the URL for the central maine power outage site
 const cmpOutageURL = "https://ecmp.cmpco.com/OutageReports/CMP.html"
 
-// New takes a client and any request headers, and returns a service
-func New(client *http.Client, reqHeaders map[string]string) Service {
-	return Service{
+// New takes a client and any request headers, and returns a Client
+func New(client *http.Client, reqHeaders map[string]string) Client {
+	return Client{
 		Client:     client,
 		ReqHeaders: reqHeaders,
 
@@ -23,7 +23,7 @@ func New(client *http.Client, reqHeaders map[string]string) Service {
 }
 
 // Latest fetches the latest outage information and returns a Report
-func (s *Service) Latest() (Report, error) {
+func (c *Client) Latest() (Report, error) {
 	var report Report
 	report.Counties = make(map[string]Outage)
 
@@ -36,17 +36,17 @@ func (s *Service) Latest() (Report, error) {
 	counties := regexp.MustCompile(`([a-zA-Z]+\.html)'>([a-zA-Z]+)</a>.+?([0-9,]+)</t.+?([0-9,]+)</t`)
 	updatedAt := regexp.MustCompile("Update: ([^<]+)")
 
-	req, err := http.NewRequest("GET", s.url, nil)
+	req, err := http.NewRequest("GET", c.url, nil)
 	if err != nil {
 		return report, fmt.Errorf("erorr creating request: %w", err)
 	}
 
 	// Set any headers provided
-	for k, v := range s.ReqHeaders {
+	for k, v := range c.ReqHeaders {
 		req.Header.Set(k, v)
 	}
 
-	resp, err := s.Client.Do(req)
+	resp, err := c.Client.Do(req)
 	if err != nil {
 		return report, fmt.Errorf("error in http GET: %w", err)
 	}

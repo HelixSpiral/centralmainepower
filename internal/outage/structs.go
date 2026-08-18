@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type Service struct {
+type Client struct {
 	Client     *http.Client
 	ReqHeaders map[string]string
 	url        string

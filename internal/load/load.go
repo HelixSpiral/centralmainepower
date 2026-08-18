@@ -12,9 +12,9 @@ import (
 // cmpMWLoadURL is the URL for the text file Central Maine Power manages
 const cmpMWLoadURL = "https://ecmp.cmpco.com/omni/content/cmpload.txt"
 
-// New takes a client and any request headers, and returns a service
-func New(client *http.Client, reqHeaders map[string]string) Service {
-	return Service{
+// New takes a client and any request headers, and returns a Client
+func New(client *http.Client, reqHeaders map[string]string) Client {
+	return Client{
 		Client:     client,
 		ReqHeaders: reqHeaders,
 
@@ -22,21 +22,21 @@ func New(client *http.Client, reqHeaders map[string]string) Service {
 	}
 }
 
-// Latest fetches the latest text file from central Maine power and returns a reading
-func (s *Service) Latest() (Reading, error) {
+// Latest fetches the latest text file from central Maine power and returns a Reading
+func (c *Client) Latest() (Reading, error) {
 	var reading Reading
 
-	req, err := http.NewRequest("GET", s.url, nil)
+	req, err := http.NewRequest("GET", c.url, nil)
 	if err != nil {
 		return reading, fmt.Errorf("erorr creating request: %w", err)
 	}
 
 	// Set any headers provided
-	for k, v := range s.ReqHeaders {
+	for k, v := range c.ReqHeaders {
 		req.Header.Set(k, v)
 	}
 
-	resp, err := s.Client.Do(req)
+	resp, err := c.Client.Do(req)
 	if err != nil {
 		return reading, fmt.Errorf("error in http GET: %w", err)
 	}
