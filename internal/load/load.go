@@ -13,7 +13,7 @@ import (
 const cmpMWLoadURL = "https://ecmp.cmpco.com/omni/content/cmpload.txt"
 
 // New takes a client and any request headers, and returns a Client
-func New(client *http.Client, reqHeaders map[string]string) Client {
+func New(client *http.Client, reqHeaders http.Header) Client {
 	return Client{
 		client:     client,
 		reqHeaders: reqHeaders,
@@ -32,9 +32,7 @@ func (c *Client) Latest() (Reading, error) {
 	}
 
 	// Set any headers provided
-	for k, v := range c.reqHeaders {
-		req.Header.Set(k, v)
-	}
+	req.Header = c.reqHeaders.Clone()
 
 	resp, err := c.client.Do(req)
 	if err != nil {

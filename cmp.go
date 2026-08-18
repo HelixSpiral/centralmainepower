@@ -14,15 +14,13 @@ func New(config *Config) Client {
 		client = config.Client
 	}
 
-	reqHeaders := map[string]string{}
+	var reqHeaders http.Header
 	if config.ReqHeaders != nil {
-		for k, v := range config.ReqHeaders {
-			reqHeaders[k] = v
-		}
+		reqHeaders = config.ReqHeaders
 	}
 
-	loadClient := load.New(client, reqHeaders)
-	outageClient := outage.New(client, reqHeaders)
+	loadClient := load.New(client, reqHeaders.Clone())
+	outageClient := outage.New(client, reqHeaders.Clone())
 
 	return Client{
 		Outage: outageClient,

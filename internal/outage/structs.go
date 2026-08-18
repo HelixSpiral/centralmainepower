@@ -7,7 +7,7 @@ import (
 
 type Client struct {
 	client     *http.Client
-	reqHeaders map[string]string
+	reqHeaders http.Header
 	url        string
 }
 

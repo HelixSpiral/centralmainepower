@@ -14,7 +14,7 @@ type Client struct {
 
 type Config struct {
 	Client     *http.Client
-	ReqHeaders map[string]string
+	ReqHeaders http.Header
 
 	MWStatsUrl    string
 	PowerStatsUrl string
