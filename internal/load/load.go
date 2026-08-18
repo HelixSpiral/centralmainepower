@@ -15,8 +15,8 @@ const cmpMWLoadURL = "https://ecmp.cmpco.com/omni/content/cmpload.txt"
 // New takes a client and any request headers, and returns a Client
 func New(client *http.Client, reqHeaders map[string]string) Client {
 	return Client{
-		Client:     client,
-		ReqHeaders: reqHeaders,
+		client:     client,
+		reqHeaders: reqHeaders,
 
 		url: cmpMWLoadURL,
 	}
@@ -32,11 +32,11 @@ func (c *Client) Latest() (Reading, error) {
 	}
 
 	// Set any headers provided
-	for k, v := range c.ReqHeaders {
+	for k, v := range c.reqHeaders {
 		req.Header.Set(k, v)
 	}
 
-	resp, err := c.Client.Do(req)
+	resp, err := c.client.Do(req)
 	if err != nil {
 		return reading, fmt.Errorf("error in http GET: %w", err)
 	}

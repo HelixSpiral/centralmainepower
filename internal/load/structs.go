@@ -6,8 +6,8 @@ import (
 )
 
 type Client struct {
-	Client     *http.Client
-	ReqHeaders map[string]string
+	client     *http.Client
+	reqHeaders map[string]string
 	url        string
 }
 

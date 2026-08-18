@@ -8,12 +8,6 @@ import (
 )
 
 type Client struct {
-	Client     *http.Client
-	ReqHeaders map[string]string
-
-	MWStatsUrl    string
-	PowerStatsUrl string
-
 	Load   load.Client
 	Outage outage.Client
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/HelixSpiral/centralmainepower/v3/internal/outage"
 )
 
-func New(config *Config) (Client, error) {
+func New(config *Config) Client {
 	client := &http.Client{}
 
 	if config.Client != nil {
@@ -25,10 +25,7 @@ func New(config *Config) (Client, error) {
 	outageClient := outage.New(client, reqHeaders)
 
 	return Client{
-		Client:     client,
-		ReqHeaders: reqHeaders,
-
 		Outage: outageClient,
 		Load:   loadClient,
-	}, nil
+	}
 }
