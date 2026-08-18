@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/HelixSpiral/centralmainepower/v3/load"
+	"github.com/HelixSpiral/centralmainepower/v3/internal/load"
 )
 
 type Client struct {

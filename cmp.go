@@ -3,7 +3,7 @@ package centralmainepower
 import (
 	"net/http"
 
-	"github.com/HelixSpiral/centralmainepower/v3/load"
+	"github.com/HelixSpiral/centralmainepower/v3/internal/load"
 )
 
 func New(config *Config) (Client, error) {
