@@ -28,7 +28,7 @@ func (c *Client) Latest() (Reading, error) {
 
 	req, err := http.NewRequest("GET", c.url, nil)
 	if err != nil {
-		return reading, fmt.Errorf("erorr creating request: %w", err)
+		return reading, fmt.Errorf("error creating request: %w", err)
 	}
 
 	// Set any headers provided
