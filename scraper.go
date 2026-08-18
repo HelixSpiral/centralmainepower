@@ -34,15 +34,6 @@ func (cmp *Client) rawReq(url string) ([]byte, error) {
 	return body, nil
 }
 
-func (cmp *Client) GetCurrentLoad() (string, error) {
-	body, err := cmp.rawReq(cmp.MWStatsUrl)
-	if err != nil {
-		return "", err
-	}
-
-	return string(body), nil
-}
-
 func (cmp *Client) GetOutageStats() (CMPPowerStats, error) {
 	var stats CMPPowerStats
 	stats.Counties = make(map[string]Outage)
